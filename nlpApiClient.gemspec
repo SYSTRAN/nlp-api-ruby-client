@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.version     = NlpApiClient::Swagger::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Systran"]
+  s.email       = "support-professional@systransoft.com"
   s.homepage     = "http://www.systransoft.com/"
   s.summary     = %q{A ruby wrapper for the Systran NLP APIs}
   s.description = %q{This gem maps to the NLP swagger API}

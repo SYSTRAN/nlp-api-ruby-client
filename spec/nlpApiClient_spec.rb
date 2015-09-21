@@ -2,19 +2,28 @@ require 'rspec'
 require_relative '../lib/nlpApiClient'
 
 describe "NlpApiClient" do
-  puts Dir.pwd
   before :all do
     NlpApiClient::Swagger.configure do |configuration|
-      configuration.key = '<INSERT API KEY HERE>'
+      configuration.host = "﻿https://platform.systran.net:8904"
+      if File.exists?(("./key.txt"))
+        key = File.read("./key.txt", :encoding => 'UTF-8')
+        if key.length > 0
+          configuration.key = key
+        else
+          puts "The key.txt file is empty"
+        end
+      else
+        puts"The key.txt file doesn't exists"
+      end
+
     end
 
   end
   describe "Configuration" do
     it "assures the user has a correct client configuration" do
-      expect(NlpApiClient::Swagger.configuration.key.length).to eq(36)
+      expect(NlpApiClient::Swagger.configuration.key.length).to be_between(10, 100)
     end
   end
-
   describe "LidApi" do
     it "does Global language detection on document." do
       result = NlpApiClient::LidApi.nlp_lid_detect_language_document_get( {:input =>  "The quick brown fox jumps over the lazy dog"})
@@ -42,7 +51,7 @@ describe "NlpApiClient" do
       expect(result.annotations).not_to be_empty
     end
     it "Gets the list  of languages in which NER is supported." do
-      result = NlpApiClient::NerApi.nlp_ner_supported_languages_get()
+      result = NlpApiClient::NerApi.nlp_ner_supported_languages_get
       expect(result.languages).not_to be_empty
     end
   end
@@ -65,7 +74,7 @@ describe "NlpApiClient" do
       expect(result.tokens).not_to be_empty
     end
     it "Lists languages in which Segmentation is supported." do
-      result = NlpApiClient::SegmentationApi.nlp_segmentation_supported_languages_get()
+      result = NlpApiClient::SegmentationApi.nlp_segmentation_supported_languages_get
       expect(result.languages).not_to be_empty
     end
   end
@@ -76,14 +85,14 @@ describe "NlpApiClient" do
       expect(result).to eq("ДжонДу")
     end
     it "Lists languages pairs in which Transcription is supported. " do
-      result = NlpApiClient::TranscriptionApi.nlp_transcription_supported_languages_get()
+      result = NlpApiClient::TranscriptionApi.nlp_transcription_supported_languages_get
       expect(result.language_pairs).not_to be_empty
     end
   end
 
   describe "MorphologyApi" do
     it "Lists of languages pairs in which Morphological analysis is supported." do
-      result = NlpApiClient::MorphologyApi.nlp_morphology_supported_languages_get()
+      result = NlpApiClient::MorphologyApi.nlp_morphology_supported_languages_get
       expect(result.languages).not_to be_empty
     end
     it "Gets the lemma for elements of an input text. " do
