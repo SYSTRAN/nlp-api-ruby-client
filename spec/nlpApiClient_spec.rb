@@ -4,9 +4,9 @@ require_relative '../lib/nlpApiClient'
 describe "NlpApiClient" do
   before :all do
     NlpApiClient::Swagger.configure do |configuration|
-      configuration.host = "﻿https://platform.systran.net:8904"
-      if File.exists?(("./key.txt"))
-        key = File.read("./key.txt", :encoding => 'UTF-8')
+      configuration.host = "https://platform.systran.net:8904"
+      if File.exists?(("./apiKey.txt"))
+        key = File.read("./apiKey.txt", :encoding => 'UTF-8')
         if key.length > 0
           configuration.key = key
         else
