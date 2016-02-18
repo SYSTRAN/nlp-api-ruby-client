@@ -4,7 +4,7 @@ require_relative "lib/nlpApi_client/swagger/version"
 
 Gem::Specification.new do |s|
   s.name        = "NlpApiClient"
-  s.version     = NlpApiClient::Swagger::VERSION
+  s.version     = '1.0.2'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Systran"]
   s.email       = "support-professional@systransoft.com"
